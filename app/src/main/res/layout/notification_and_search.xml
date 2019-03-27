@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edit_text_search"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_margin="15dp"
+        android:hint="Search query term"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="50">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Begin date"
+                android:textAlignment="center"/>
+            <EditText
+                android:id="@+id/edit_text_begin-date"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:spinnerMode="dialog"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_arts"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Arts"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_business"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Business"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_entrepreneurs"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Entrepreneurs"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="50">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End date"
+                android:textAlignment="center"/>
+            <EditText
+                android:id="@+id/edit_text_end_date"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp" />
+            <CheckBox
+                android:id="@+id/checkbox_politic"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Politic"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary" />
+            <CheckBox
+                android:id="@+id/checkbox_sport"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Sport"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary" />
+            <CheckBox
+                android:id="@+id/checkbox_travel"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Travel"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/button_search"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:text="Search"
+        android:textColor="@android:color/white"/>
+    <Switch
+        android:id="@+id/switch_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="40dp"
+        android:textColor="@android:color/black"
+        android:text="Enable notifications (once per day)"
+        />
+    </LinearLayout>
+
+

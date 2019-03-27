@@ -1,7 +1,5 @@
 package conraud.sylvain.mynews.ui.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,12 +15,14 @@ import java.util.List;
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.data.Article;
 import conraud.sylvain.mynews.ui.adapters.RecyclerViewAdapter;
+import conraud.sylvain.mynews.utils.ItemClickSupport;
 
 public class MainFragment extends Fragment {
 
     int position;
     public List<Article> articleList = new ArrayList<>();
     public RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(articleList,position);
+    RecyclerView recyclerView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -49,13 +49,25 @@ public class MainFragment extends Fragment {
         assert getArguments() != null;
         int position = getArguments().getInt("position");
 
-        RecyclerView recyclerView = result.findViewById(R.id.fragment_main_recycler_view);
+        recyclerView = result.findViewById(R.id.fragment_main_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerViewAdapter = new RecyclerViewAdapter(articleList, position);
         recyclerView.setAdapter(recyclerViewAdapter);
+        configureOnClickRecyclerView();
 
         return result;
     }
+
+    void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                    }
+                });
+    }
+
+    
 
 
 }

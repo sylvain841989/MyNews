@@ -3,17 +3,20 @@ package conraud.sylvain.mynews.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.List;
 
 import conraud.sylvain.mynews.data.Article;
 import conraud.sylvain.mynews.data.Root;
 import conraud.sylvain.mynews.ui.adapters.ViewPagerAdapter;
 
-public class CallBack implements CallService.Callback {
+public class CallBack  implements CallService.Callback {
 
     public static int KEY_TOPSTORIES = 0;
     public static int KEY_MOSTPOPULAR = 1;
     public static int KEY_SCIENCE = 2;
+    public static int KEY_SEARCH = 3;
+
     public ViewPagerAdapter viewPagerAdapter;
 
     private static CallBack instance = null;

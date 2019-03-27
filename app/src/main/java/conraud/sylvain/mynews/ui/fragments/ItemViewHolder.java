@@ -30,8 +30,11 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     /*Implement item*/
     public void displayItem(Article article, int position){
+        if(article.getPublishedDate() != null)
         textViewDate.setText(article.getPublishedDate());
+        if(article.getSection() != null)
         textViewCategory.setText(article.getSection());
+        if(article.getTitle() != null)
         textViewTitle.setText(article.getTitle());
         imageView.setImageResource(R.drawable.noimage);
 
@@ -39,11 +42,20 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
             case 0 : if(multimediaContentImage(article))
                 glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
             break;
+
             case 1 :if(mediaContentImage(article))
                 glide.load(article.getMedia().get(0).getMedia().get(0).getUrl()).into(imageView);
             break;
+
             case 2 :if(multimediaContentImage(article))
                 glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
+            break;
+
+            case 3 : textViewTitle.setText(article.getLeadParagraph());
+                     textViewDate.setText(article.getPubDate());
+                     textViewCategory.setText(article.getSectionName());
+                if(multimediaContentImage(article))
+                    glide.load("https://static01.nyt.com/" + article.getMultimedia().get(0).getUrl()).into(imageView);
         }
     }
 

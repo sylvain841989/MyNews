@@ -1,8 +1,9 @@
 package conraud.sylvain.mynews.data;
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Article {
+public class Article implements Serializable {
 
 
         @SerializedName("section")
@@ -37,7 +38,29 @@ public class Article {
         @Expose
         private List<Multimedia> media = null;
 
+        @SerializedName("lead_paragraph")
+        @Expose
+        private String leadParagraph = null;
 
+        @SerializedName("pub_date")
+        @Expose
+        private String pubDate = null;
+
+        @SerializedName("section_name")
+        @Expose
+        private String sectionName = null;
+
+        public String getSectionName(){
+                return sectionName;
+        }
+
+        public String getPubDate(){
+                return pubDate;
+        }
+
+        public String getLeadParagraph(){
+                return leadParagraph;
+        }
         public String getSection() {
             return section;
         }

@@ -1,12 +1,13 @@
 package conraud.sylvain.mynews.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.view.Menu;
+import android.view.MenuItem;
 
 
 import conraud.sylvain.mynews.R;
@@ -45,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+    //Configure click
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_button_search:
+                startSearchActivity();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+
+    }
 
     /*Configure ViewPager and Tabs*/
     private void configureViewPagerAndTabs(){
@@ -62,5 +74,11 @@ public class MainActivity extends AppCompatActivity {
         CallService.callTopStories(callBack, "home", CallBack.KEY_TOPSTORIES, this);
         CallService.callMostPopular(callBack,"viewed", CallBack.KEY_MOSTPOPULAR, this);
         CallService.callTopStories(callBack, "science", CallBack.KEY_SCIENCE,this);
+    }
+
+    /*Open Search Activity*/
+    private void startSearchActivity(){
+        Intent intent = new Intent(this,SearchActivity.class);
+        startActivity(intent);
     }
 }

@@ -7,7 +7,6 @@ import java.lang.ref.WeakReference;
 
 import conraud.sylvain.mynews.data.Root;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CallService {
@@ -37,6 +36,23 @@ public class CallService {
     public static void callMostPopular(Callback callback, String type, final int id, final Context context){
         final WeakReference<Callback> callbackWeakReference = new WeakReference<>(callback);
         Call<Root> call =  RetrofitManager.getInstance().callMostPopular(type);
+        call.enqueue(new retrofit2.Callback<Root>() {
+            @Override
+            public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {
+                callbackWeakReference.get().onResponse(response.body(), id);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Root> call, @NonNull Throwable t) {
+                callbackWeakReference.get().onFailure(context);
+            }
+        });
+
+    }
+    /*Call Search*/
+    public static void callSearch(Callback callback, String search, String filter, final int id, final Context context){
+        final WeakReference<Callback> callbackWeakReference = new WeakReference<>(callback);
+        Call<Root> call =  RetrofitManager.getInstance().callSearch(search, filter);
         call.enqueue(new retrofit2.Callback<Root>() {
             @Override
             public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {

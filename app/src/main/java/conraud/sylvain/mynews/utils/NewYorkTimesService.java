@@ -4,6 +4,7 @@ import conraud.sylvain.mynews.data.Root;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NewYorkTimesService {
 
@@ -12,5 +13,8 @@ public interface NewYorkTimesService {
 
     @GET("/svc/mostpopular/v2/{viewed}/1.json?api-key=QvXYMDrGQ0TCPo3okaqyuUSp54eQBniA")
     Call<Root> callMostPopular (@Path("viewed") String type);
+
+    @GET("/svc/search/v2/articlesearch.json?api-key=QvXYMDrGQ0TCPo3okaqyuUSp54eQBniA")
+    Call<Root> callSearch (@Query("q") String search , @Query("fq") String filter);
 
 }
