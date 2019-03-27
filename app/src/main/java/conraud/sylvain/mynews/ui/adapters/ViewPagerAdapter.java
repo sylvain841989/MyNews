@@ -5,18 +5,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import conraud.sylvain.mynews.ui.fragments.MainFragment;
 
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public MainFragment[] arrayFragment = new MainFragment[3];
+
+    public ViewPagerAdapter(FragmentManager fm ) {
         super(fm);
+
+        //create fragment array
+        for (int i = 0 ; i<arrayFragment.length ; i++)
+        {
+            arrayFragment[i] = MainFragment.newInstance(i);
+        }
     }
 
     @Override
     public Fragment getItem(int i) {
-        return new MainFragment().newInstance();
+        return arrayFragment[i];
     }
 
     @Override
