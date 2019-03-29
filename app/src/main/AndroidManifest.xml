@@ -13,10 +13,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.ResultsSearchActivity"
-            android:parentActivityName=".ui.activity.SearchActivity"/>
-        <activity android:name=".ui.activity.SearchActivity"
-            android:parentActivityName=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.ArticleWebViewActivity"></activity>
+        <activity
+            android:name=".ui.activity.ResultsSearchActivity"
+            android:parentActivityName=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.SearchActivity" />
+        </activity>
+        <!-- <activity
+            android:name=".ui.activity.ResultsSearchActivity"
+            android:parentActivityName=".ui.activity.SearchActivity" /> -->
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

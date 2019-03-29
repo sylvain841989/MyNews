@@ -1,5 +1,6 @@
 package conraud.sylvain.mynews.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.data.Article;
+import conraud.sylvain.mynews.ui.activity.ArticleWebViewActivity;
 import conraud.sylvain.mynews.ui.adapters.RecyclerViewAdapter;
 import conraud.sylvain.mynews.utils.ItemClickSupport;
 
@@ -57,17 +59,22 @@ public class MainFragment extends Fragment {
 
         return result;
     }
-
+    //configure click
     void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        openArticle(articleList.get(position));
                     }
                 });
     }
 
-    
+    void openArticle(Article article){
+        Intent intent = new Intent(getContext(), ArticleWebViewActivity.class);
+        intent.putExtra("url", article.getUrl());
+        startActivity(intent);
+    }
 
 
 }

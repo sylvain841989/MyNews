@@ -33,9 +33,9 @@ public class CallService {
         });
     }
     /*Call MostPopular*/
-    public static void callMostPopular(Callback callback, String type, final int id, final Context context){
+    public static void callMostPopular(Callback callback, final int id, final Context context){
         final WeakReference<Callback> callbackWeakReference = new WeakReference<>(callback);
-        Call<Root> call =  RetrofitManager.getInstance().callMostPopular(type);
+        Call<Root> call =  RetrofitManager.getInstance().callMostPopular();
         call.enqueue(new retrofit2.Callback<Root>() {
             @Override
             public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {
@@ -50,9 +50,9 @@ public class CallService {
 
     }
     /*Call Search*/
-    public static void callSearch(Callback callback, String search, String filter, final int id, final Context context){
+    public static void callSearch(Callback callback, String search, String filter,String beginDate, String endDate, final int id, final Context context){
         final WeakReference<Callback> callbackWeakReference = new WeakReference<>(callback);
-        Call<Root> call =  RetrofitManager.getInstance().callSearch(search, filter);
+        Call<Root> call =  RetrofitManager.getInstance().callSearch(search, filter,beginDate,endDate);
         call.enqueue(new retrofit2.Callback<Root>() {
             @Override
             public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {

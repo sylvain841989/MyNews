@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     /*Call*/
     private void call(){
         CallService.callTopStories(callBack, "home", CallBack.KEY_TOPSTORIES, this);
-        CallService.callMostPopular(callBack,"viewed", CallBack.KEY_MOSTPOPULAR, this);
+        CallService.callMostPopular(callBack, CallBack.KEY_MOSTPOPULAR, this);
         CallService.callTopStories(callBack, "science", CallBack.KEY_SCIENCE,this);
     }
 

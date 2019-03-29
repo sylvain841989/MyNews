@@ -30,8 +30,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     /*Implement item*/
     public void displayItem(Article article, int position){
-        if(article.getPublishedDate() != null)
-        textViewDate.setText(article.getPublishedDate());
+        //if(article.getPublishedDate() != null)
+        textViewDate.setText(configureFrenchDate(article));
         if(article.getSection() != null)
         textViewCategory.setText(article.getSection());
         if(article.getTitle() != null)
@@ -67,5 +67,20 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     //check media
     private Boolean mediaContentImage(Article article){
         return article.getMedia().size() > 0 && article.getMedia().get(0).getMedia().size()>0;
+    }
+
+    //configure french date display
+    private String configureFrenchDate(Article article){
+        String date;
+        if (article.getPublishedDate() != null){
+            date = article.getPublishedDate();}
+            else{
+                date = article.getPubDate();
+        }
+        String year = date.substring(2,4);
+        String month = date.substring(5,7);
+        String day = date.substring(8,10);
+        date = day + "/" + month + "/" + year;
+        return date;
     }
 }
