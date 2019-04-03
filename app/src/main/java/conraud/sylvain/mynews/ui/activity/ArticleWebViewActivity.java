@@ -29,13 +29,23 @@ public class ArticleWebViewActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-        configureToolBar();
+        configureToolbar();
     }
 
-    void configureToolBar(){
+    /*configure UI*/
+    //Configure Toolbar
+    private void configureToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Article");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
+        assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

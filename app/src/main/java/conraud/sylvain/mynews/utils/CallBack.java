@@ -16,6 +16,7 @@ public class CallBack  implements CallService.Callback {
     public static int KEY_MOSTPOPULAR = 1;
     public static int KEY_SCIENCE = 2;
     public static int KEY_SEARCH = 3;
+    public static int KEY_NOTIFICATION = 4;
 
     public ViewPagerAdapter viewPagerAdapter;
 

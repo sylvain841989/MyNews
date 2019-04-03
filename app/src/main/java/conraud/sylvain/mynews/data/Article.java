@@ -50,6 +50,14 @@ public class Article implements Serializable {
         @Expose
         private String sectionName = null;
 
+        @SerializedName("web_url")
+        @Expose
+        private String weburl = null;
+
+        public String getWeburl(){
+                return weburl;
+        }
+
         public String getSectionName(){
                 return sectionName;
         }
