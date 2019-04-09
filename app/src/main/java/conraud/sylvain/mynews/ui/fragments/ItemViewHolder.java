@@ -1,9 +1,12 @@
 package conraud.sylvain.mynews.ui.fragments;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -11,12 +14,15 @@ import com.bumptech.glide.RequestManager;
 
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.data.Article;
+import conraud.sylvain.mynews.utils.Save;
 
 public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView imageView;
     private TextView textViewDate, textViewTitle, textViewCategory;
     private RequestManager glide;
+    private LinearLayout mainLinearLayout;
+    private Context context;
 
     /*Assign Views*/
     public ItemViewHolder(@NonNull View itemView) {
@@ -26,6 +32,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         textViewCategory = itemView.findViewById(R.id.fragment_main_item_text_view_category);
         textViewTitle = itemView.findViewById(R.id.fragment_main_item_text_view_title);
         glide = Glide.with(itemView);
+        mainLinearLayout = itemView.findViewById(R.id.fragment_main_item_main_layout);
+        context = itemView.getContext();
     }
 
     /*Implement item*/
@@ -37,6 +45,11 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         if(article.getTitle() != null)
         textViewTitle.setText(article.getTitle());
         imageView.setImageResource(R.drawable.noimage);
+        if(checkIfRead(article)){
+            mainLinearLayout.setBackgroundResource(R.color.colorIfRead);
+        }else{
+            mainLinearLayout.setBackgroundColor(Color.TRANSPARENT);
+        }
 
         switch (position){
             case 0 : if(multimediaContentImage(article))
@@ -82,5 +95,14 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         String day = date.substring(8,10);
         date = day + "/" + month + "/" + year;
         return date;
+    }
+
+    private Boolean checkIfRead(Article article){
+        if(article.getUrl() != null){
+            return  Save.getInstance().checkUrl(article.getUrl(), context);
+        }
+        else{
+            return Save.getInstance().checkUrl(article.getWeburl(), context);
+        }
     }
 }

@@ -16,7 +16,10 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class Notification {
     private static Notification instance = null;
-    public Context context;
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
+    private Intent intent;
+    //public Context context;
     /* Private constructor*/
     private Notification() {
 
@@ -30,26 +33,32 @@ public class Notification {
     }
 
     /*configure channel and calendar for notifications*/
-    public void configureNotification() {
+    private void configureNotification(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("notif", "notifications", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager =context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);}
 
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,8);
-        calendar.set(Calendar.MINUTE, 36);
-        calendar.set(Calendar.SECOND, 10);
+         Calendar calendar = Calendar.getInstance();
+         calendar.set(Calendar.HOUR_OF_DAY,18);
 
-        Intent intent = new Intent(context, NotificationReceveir.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if(Save.getInstance().loadActivationNotification()){
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 2*60*1000,pendingIntent);
-        }else{
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 60000, 1*60*1000,pendingIntent);
+
+    }
+    /*Check enable notification and change state if need*/
+    public void changeStateNotification(Context context){
+        intent = new Intent(context, NotificationReceveir.class);
+        pendingIntent = PendingIntent.getBroadcast(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
+
+        if(!Save.getInstance().loadActivationNotification()) {
             alarmManager.cancel(pendingIntent);
+        }else{
+            configureNotification(context);
         }
+
     }
 }

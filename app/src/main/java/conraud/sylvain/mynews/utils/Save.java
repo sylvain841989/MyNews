@@ -3,13 +3,12 @@ package conraud.sylvain.mynews.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import conraud.sylvain.mynews.ui.activity.MainActivity;
 
 public class Save {
 
-    private static Save instance = null;
     public SharedPreferences preferences;
-    public Context context;
+   // public Context context;
+    private static Save instance = null;
 
 
     /* Private constructor*/
@@ -24,21 +23,22 @@ public class Save {
         return instance;
 
     }
+    /* Save and load Notification search and enable*/
     public void saveSearchNotification(String search){
         preferences.edit().putString("searchNotification", search).apply();
     }
     public String loadSearchNotification(){
         return preferences.getString("searchNotification",null);
     }
-    public void saveActivationNotification(Boolean enable){
+    public void saveActivationNotification(Boolean enable, Context context){
         preferences.edit().putBoolean("notificationEnable", enable).apply();
-        Notification.getInstance().configureNotification();
+        Notification.getInstance().changeStateNotification(context);
     }
     public Boolean loadActivationNotification(){
         return preferences.getBoolean("notificationEnable", true);
 
     }
-
+    /* Save and load checkbox for article search*/
     public void saveCheckbox(Boolean arts, Boolean sports, Boolean travel,Boolean entrepreneur, Boolean politic, Boolean business, String filter){
         preferences.edit().putBoolean("arts",arts).apply();
         preferences.edit().putBoolean("sports",sports).apply();
@@ -66,7 +66,24 @@ public class Save {
     public Boolean loadCheckboxbusiness (){
         return preferences.getBoolean("business", true);
     }
-    public String loadFilter(){
+    String loadFilter(){
         return preferences.getString("filter", null);
+    }
+
+    /* Save and check url for color*/
+    public void saveUrl(String url, Context context){
+        if(preferences == null)
+            preferences = context.getSharedPreferences("save",Context.MODE_PRIVATE);
+
+        preferences.edit().putString(url,url).apply();
+    }
+
+    public Boolean checkUrl(String url, Context context){
+        if(preferences == null)
+            preferences = context.getSharedPreferences("save", Context.MODE_PRIVATE);
+
+            return preferences.contains(url);
+
+
     }
 }

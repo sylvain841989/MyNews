@@ -1,21 +1,32 @@
 package conraud.sylvain.mynews.utils;
 
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.List;
 
 import conraud.sylvain.mynews.R;
+import conraud.sylvain.mynews.data.Article;
 import conraud.sylvain.mynews.data.Root;
+import conraud.sylvain.mynews.ui.activity.MainActivity;
 import conraud.sylvain.mynews.ui.activity.ResultsSearchActivity;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NotificationReceveir extends BroadcastReceiver implements CallService.Callback{
     Context context;
-
     @Override
     public void onReceive(Context context, Intent intent) {
     this.context = context;
@@ -28,14 +39,21 @@ public class NotificationReceveir extends BroadcastReceiver implements CallServi
         Intent repeatingIntent = new Intent(context, ResultsSearchActivity.class);
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         repeatingIntent.putExtra("root", root);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(repeatingIntent);
+
+        PendingIntent pendingIntent1 = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"notif" )
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentIntent(pendingIntent1)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setAutoCancel(true)
                 .setContentTitle("Vos articles")
-                .setContentText("Les articles correspondants à votre recherche sont disponibles")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                //.setContentText(textNotification(checkNbArticle(root)))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(textNotification(checkNbArticle(root))));
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(0, builder.build());
@@ -43,22 +61,23 @@ public class NotificationReceveir extends BroadcastReceiver implements CallServi
     }
     /*Call search*/
     private void call(){
-        String search = Save.getInstance().loadSearchNotification();
-        String filter = Save.getInstance().loadFilter();
+        SharedPreferences preferences = context.getSharedPreferences("save",MODE_PRIVATE);
+        String search =preferences.getString("searchNotification","");
+        String filter = preferences.getString("filter", "arts+business+entrepreneurs+politic+sport+travel+");
         String date = getDate();
+        CallService.callNotification(this,search,filter,date,date, CallBack.KEY_SEARCH,context);
 
-        CallService.callSearch(this,search,filter,date,date, CallBack.KEY_NOTIFICATION,context);
     }
 
     /*Callback search*/
     @Override
-    public void onResponse(Root root, int id) {
+    public void onResponse(Root root, int id, Context context) {
         createNotif(root);
     }
 
     @Override
     public void onFailure(Context context) {
-        createNotif(null);
+
     }
     /*today date*/
     private String getDate(){
@@ -74,4 +93,24 @@ public class NotificationReceveir extends BroadcastReceiver implements CallServi
             dayString = "0"+dayString;
         return String.valueOf(year)+monthString+dayString;
     }
+
+    private int checkNbArticle(Root root){
+        List<Article> articleList;
+        if(root.response!=null && root.response.docs != null){
+            articleList = root.response.docs;
+        }else{
+            articleList = root.results;
+        }
+
+        return articleList.size();
+    }
+
+    private String textNotification(int nbArticle){
+        if(nbArticle>0){
+            return nbArticle + " articles correspondent à votre recherche";
+        }else{
+            return "Aucun article ne correspond à votre recherche, élargissez les critères";
+        }
+    }
+
 }

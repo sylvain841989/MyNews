@@ -24,7 +24,7 @@ public class NotificationActivity extends AppCompatActivity {
     Switch aSwitch;
     CheckBox checkBoxArts, checkBoxBusiness, checkBoxEntrepreneurs, checkBoxPolitic, checkBoxSport, checkBoxTravel;
     String filter;
-
+    int nbCheckboxChecked;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +102,7 @@ public class NotificationActivity extends AppCompatActivity {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Save.getInstance().saveActivationNotification(isChecked);
+                Save.getInstance().saveActivationNotification(isChecked,NotificationActivity.this);
             }
         });
         aSwitch.setChecked(Save.getInstance().loadActivationNotification());
@@ -121,6 +121,7 @@ public class NotificationActivity extends AppCompatActivity {
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                blockCheckboxChecked();
                 getFilters();
                 Save.getInstance().saveCheckbox(checkBoxArts.isChecked(),checkBoxSport.isChecked(),checkBoxTravel.isChecked(),
                         checkBoxEntrepreneurs.isChecked(),checkBoxPolitic.isChecked(),checkBoxBusiness.isChecked(),filter);
@@ -134,6 +135,33 @@ public class NotificationActivity extends AppCompatActivity {
         checkBoxTravel.setOnCheckedChangeListener(onCheckedChangeListener);
 
 
+    }
+
+    private void blockCheckboxChecked(){
+       nbCheckboxChecked = 0;
+       CheckBox[] arrayCheckbox = new CheckBox[6];
+        arrayCheckbox[0]= checkBoxBusiness;
+        arrayCheckbox[1]= checkBoxArts;
+        arrayCheckbox[2]= checkBoxSport;
+        arrayCheckbox[3]= checkBoxTravel;
+        arrayCheckbox[4]= checkBoxEntrepreneurs;
+        arrayCheckbox[5]= checkBoxPolitic;
+
+        for(CheckBox checkBox : arrayCheckbox){
+            if(checkBox.isChecked())
+                nbCheckboxChecked+=1;
+        }
+
+        if(nbCheckboxChecked < 2){
+            for(CheckBox checkBox : arrayCheckbox){
+                if(checkBox.isChecked())
+                    checkBox.setEnabled(false);
+            }
+        }else {
+            for (CheckBox checkBox : arrayCheckbox) {
+                checkBox.setEnabled(true);
+            }
+        }
     }
 
     /*Check checkbox and return String*/

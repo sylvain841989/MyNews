@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import conraud.sylvain.mynews.R;
+import conraud.sylvain.mynews.utils.Save;
 
 public class ArticleWebViewActivity extends AppCompatActivity {
     private String url;
@@ -21,6 +22,7 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_web_view);
         url = getIntent().getStringExtra("url");
+        Save.getInstance().saveUrl(url, this);
         webView = findViewById(R.id.web_view);
         progressBar = findViewById(R.id.progress_bar);
         webView.loadUrl(url);

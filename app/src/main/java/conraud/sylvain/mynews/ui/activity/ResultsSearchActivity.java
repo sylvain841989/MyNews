@@ -19,29 +19,42 @@ import conraud.sylvain.mynews.data.Root;
 import conraud.sylvain.mynews.ui.adapters.RecyclerViewAdapter;
 import conraud.sylvain.mynews.utils.CallBack;
 import conraud.sylvain.mynews.utils.ItemClickSupport;
+import conraud.sylvain.mynews.utils.Save;
 
 public class ResultsSearchActivity extends AppCompatActivity {
 
     Root root;
     RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
     List<Article> articleList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_search);
         root  = (Root) getIntent().getSerializableExtra("root");
+       // android.os.Debug.waitForDebugger();
         configureRecycler();
         configureToolbar();
         configureOnClickRecyclerView();
 
+        System.out.println(articleList);
         if(articleList == null || articleList.size() == 0)
             displayDialogNoArticle();
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recyclerViewAdapter.notifyDataSetChanged();
+
+    }
+
     /*configure UI*/
     //Configure Toolbar
     private void configureToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Results");
+        toolbar.setTitle("Articles");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
@@ -55,10 +68,18 @@ public class ResultsSearchActivity extends AppCompatActivity {
     }
     //configure Recycler
     private void configureRecycler(){
-        articleList = root.response.docs;
+        int key;
+        if(root.response!=null && root.response.docs != null){
+            articleList = root.response.docs;
+            key = 3;
+        }else{
+            articleList = root.results;
+            key = 0;
+        }
+        recyclerViewAdapter = new RecyclerViewAdapter(articleList,key);
         recyclerView = findViewById(R.id.activity_result_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        recyclerView.setAdapter(new RecyclerViewAdapter(articleList, CallBack.KEY_SEARCH));
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
     //configure click
     void configureOnClickRecyclerView(){
@@ -72,7 +93,12 @@ public class ResultsSearchActivity extends AppCompatActivity {
     }
     void openArticle(Article article){
         Intent intent = new Intent(this, ArticleWebViewActivity.class);
-        intent.putExtra("url", article.getWeburl());
+        if(article.getWeburl() != null){
+            intent.putExtra("url", article.getWeburl());
+        }
+        else{
+            intent.putExtra("url",article.getUrl());
+        }
         startActivity(intent);
     }
     private void displayDialogNoArticle(){

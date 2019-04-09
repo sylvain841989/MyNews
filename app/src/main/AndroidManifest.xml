@@ -14,34 +14,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.NotificationActivity"></activity>
-        <activity android:name=".ui.activity.ArticleWebViewActivity" />
+        <activity android:name=".ui.activity.NotificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ArticleWebViewActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.ResultsSearchActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.activity.SearchActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+           >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.SearchActivity" />
         </activity>
-        <!--
- <activity
-            android:name=".ui.activity.ResultsSearchActivity"
-            android:parentActivityName=".ui.activity.SearchActivity" />
-        -->
         <activity
             android:name=".ui.activity.SearchActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.MainActivity">
+            android:parentActivityName=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".utils.NotificationReceveir" />
+        <receiver android:name=".utils.NotificationReceveir"
+          />
     </application>
 
 </manifest>

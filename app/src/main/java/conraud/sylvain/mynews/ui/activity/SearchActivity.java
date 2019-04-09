@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -53,7 +54,9 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         toolbar.setTitle("Search");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
     //Hide Ui notifications
@@ -121,6 +124,7 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
            }
        });
     }
+
     //display and save date
     @SuppressLint("SetTextI18n")
     void setDate(int year, int month , int day, int id){
@@ -129,18 +133,23 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         if(monthString.length() == 1)
             monthString = "0" + monthString;
 
+        String dayString = String.valueOf(day);
+        if(dayString.length() == 1)
+            dayString = "0" +dayString;
+
         switch (id){
-            case 0:editTextBeginDate.setText(day+"/" + monthString+"/" + year);
-                beginDate = String.valueOf(year) + monthString + String.valueOf(day);
+            case 0:editTextBeginDate.setText(dayString+"/" + monthString+"/" + year);
+                beginDate = String.valueOf(year) + monthString + dayString;
                 break;
-            case 1:editTextEndDate.setText(day+"/" + monthString+"/" + year);
-                endDate = String.valueOf(year) + monthString + String.valueOf(day);
+            case 1:editTextEndDate.setText(dayString+"/" + monthString+"/" + year);
+                endDate = String.valueOf(year) + monthString + dayString;
                 break;
         }
     }
 
     /*Check checkbox and return String*/
     String getFilters(){
+        stringBuilderFilter = new StringBuilder();
 
         if(checkBoxArts.isChecked())
             stringBuilderFilter.append("arts+");
@@ -160,12 +169,49 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
 
     /*Start Call Search*/
     void callSearch(){
-        String search = editTextSearch.getText().toString();
-        CallService.callSearch(this, search, getFilters(),beginDate, endDate,CallBack.KEY_SEARCH,this);
+        if(checkDateIfIsCorrect()){
+            String search = editTextSearch.getText().toString();
+            String filter = getFilters();
+            if(filter.length()>1){
+                CallService.callSearch(this, search, filter,beginDate, endDate,CallBack.KEY_SEARCH,this);
+            }else{
+                displayDialogErrorFilter();
+            }
+        }
+        else{
+            displayDialogErrorDate();
+        }
+
+    }
+    /*Dialog error*/
+    private void displayDialogErrorFilter() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Au moins une catégorie doit être cochée")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void displayDialogErrorDate() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Les dates pour la recherche ne sont pas remplies correctements")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create()
+                .show();
     }
 
     @Override
-    public void onResponse(Root root, int id) {
+    public void onResponse(Root root, int id, Context context) {
         startResultsActivity(root);
     }
 
@@ -174,11 +220,22 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
     }
 
+    private Boolean checkDateIfIsCorrect(){
+        if(endDate == null && beginDate == null)
+            return true;
+        if(endDate ==null || beginDate == null)
+            return false;
+        return Integer.valueOf(beginDate) < Integer.valueOf(endDate);
+
+    }
+
     /*Open Results Activity*/
     void startResultsActivity(Root root){
         Intent intent = new Intent(this, ResultsSearchActivity.class);
         intent.putExtra("root", root);
         startActivity(intent);
     }
+
+
 
 }

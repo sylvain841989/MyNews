@@ -66,6 +66,7 @@ public class MainFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         openArticle(articleList.get(position));
+
                     }
                 });
     }
@@ -76,5 +77,9 @@ public class MainFragment extends Fragment {
         startActivity(intent);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerViewAdapter.notifyDataSetChanged();
+    }
 }
