@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class NotificationReceveir extends BroadcastReceiver implements CallService.Callback{
+public class NotificationReceiver extends BroadcastReceiver implements CallService.Callback{
     Context context;
     @Override
     public void onReceive(Context context, Intent intent) {

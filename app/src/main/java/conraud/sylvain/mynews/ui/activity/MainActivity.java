@@ -23,7 +23,6 @@ import conraud.sylvain.mynews.ui.adapters.ViewPagerAdapter;
 import conraud.sylvain.mynews.utils.CallBack;
 import conraud.sylvain.mynews.utils.CallService;
 import conraud.sylvain.mynews.utils.Notification;
-import conraud.sylvain.mynews.utils.NotificationReceveir;
 import conraud.sylvain.mynews.utils.Save;
 
 public class MainActivity extends AppCompatActivity {

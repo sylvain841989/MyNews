@@ -225,7 +225,7 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
             return true;
         if(endDate ==null || beginDate == null)
             return false;
-        return Integer.valueOf(beginDate) < Integer.valueOf(endDate);
+        return Integer.valueOf(beginDate) <= Integer.valueOf(endDate);
 
     }
 

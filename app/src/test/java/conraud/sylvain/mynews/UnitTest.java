@@ -25,7 +25,7 @@ public class UnitTest {
             dayString = "0" +dayString;
 
         assertEquals( "05" , monthString);
-        assertEquals( "02" , dayString);
+        assertEquals( "023" , dayString);
 
         }
 

@@ -78,7 +78,6 @@ public class CallService {
         call.enqueue(new retrofit2.Callback<Root>() {
             @Override
             public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {
-                System.out.println("callsearch ok");
 
               callback.onResponse(response.body(), id, context);
 
@@ -86,7 +85,6 @@ public class CallService {
 
             @Override
             public void onFailure(@NonNull Call<Root> call, @NonNull Throwable t) {
-                System.out.println("callsearch failed");
 
                 callback.onFailure(context);
 

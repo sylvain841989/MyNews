@@ -7,12 +7,14 @@
     android:layout_width="wrap_content">
 
     <item android:title="Search Filter"
-        tools:ignore="HardcodedText">
+        tools:ignore="HardcodedText"
+        >
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/activity_main_drawer_arts"
-                    android:title="arts" />
+                    android:title="arts"
+                    />
                 <item
                     android:id="@+id/activity_main_drawer_sports"
                     android:title="sports" />

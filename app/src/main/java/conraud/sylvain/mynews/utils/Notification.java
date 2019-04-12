@@ -10,8 +10,6 @@ import android.os.Build;
 
 import java.util.Calendar;
 
-import conraud.sylvain.mynews.ui.activity.MainActivity;
-
 import static android.content.Context.ALARM_SERVICE;
 
 public class Notification {
@@ -45,12 +43,12 @@ public class Notification {
 
 
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 60000, 1*60*1000,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY,pendingIntent);
 
     }
     /*Check enable notification and change state if need*/
     public void changeStateNotification(Context context){
-        intent = new Intent(context, NotificationReceveir.class);
+        intent = new Intent(context, NotificationReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
 
