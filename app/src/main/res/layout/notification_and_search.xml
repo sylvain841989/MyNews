@@ -7,14 +7,13 @@
     android:orientation="vertical">
 
     <EditText
-        android:autofillHints="@android:string/autofill"
         android:id="@+id/edit_text_search"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:backgroundTint="@color/colorPrimary"
         android:layout_margin="15dp"
         android:hint="Search query term"
-        tools:ignore="UnusedAttribute"
+        tools:ignore="Autofill,UnusedAttribute"
         android:inputType="text"/>
 
     <LinearLayout
@@ -37,7 +36,6 @@
                 android:textAlignment="center"/>
 
             <EditText
-                android:autofillHints="@android:string/autofill"
                 android:id="@+id/edit_text_begin-date"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -48,7 +46,7 @@
                 android:focusable="false"
                 android:textAlignment="center"
                 android:inputType="none"
-                tools:ignore="LabelFor,UnusedAttribute" />
+                tools:ignore="Autofill,LabelFor,UnusedAttribute" />
 
             <CheckBox
                 android:id="@+id/checkbox_arts"
@@ -99,7 +97,6 @@
                 android:textAlignment="center"/>
 
             <EditText
-                android:autofillHints="@android:string/autofill"
                 android:id="@+id/edit_text_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -109,7 +106,7 @@
                 android:focusable="false"
                 android:textAlignment="center"
                 android:inputType="none"
-                tools:ignore="LabelFor,TextFields,UnusedAttribute" />
+                tools:ignore="Autofill,LabelFor,TextFields,UnusedAttribute" />
 
             <CheckBox
                 android:id="@+id/checkbox_politic"
