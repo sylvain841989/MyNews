@@ -9,7 +9,6 @@
         layout="@layout/toolbar"/>
 
     <include
-
         layout="@layout/notification_and_search"/>
 
 </LinearLayout>

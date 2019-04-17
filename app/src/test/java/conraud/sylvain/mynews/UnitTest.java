@@ -4,60 +4,48 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
+import conraud.sylvain.mynews.ui.activity.SearchActivity;
+import conraud.sylvain.mynews.utils.NotificationReceiver;
+
 import static org.junit.Assert.*;
 
 
 public class UnitTest {
 
     /*Search Activity*/
-    @Test
-    public void setDate(){
 
-        int month = 4;
-        int day = 2;
-
-        month += 1 ;
-        String monthString = String.valueOf(month);
-        if(monthString.length() == 1)
-            monthString = "0" + monthString;
-
-        String dayString = String.valueOf(day);
-            dayString = "0" +dayString;
-
-        assertEquals( "05" , monthString);
-        assertEquals( "023" , dayString);
-
-        }
-
-    @Test
-    public void getFilters(){
-       StringBuilder stringBuilderFilter = new StringBuilder();
-
-            stringBuilderFilter.append("arts+");
-            stringBuilderFilter.append("business+");
-            stringBuilderFilter.append("entrepreneurs+");
-            stringBuilderFilter.append("politic+");
-            stringBuilderFilter.append("sport+");
-            stringBuilderFilter.append("travel+");
-
-            assertEquals("arts+business+entrepreneurs+politic+sport+travel+", stringBuilderFilter.toString());
+        @Test
+        public void setDateTest(){
+            SearchActivity searchActivity = new SearchActivity();
+            searchActivity.setDate(2019,5,25,2);
+            System.out.println(searchActivity.beginDate);
+            assertEquals("20190625", searchActivity.beginDate);
+            assertEquals("25/06/2019", searchActivity.dateTest);
         }
 
 
         /*Notification Recever*/
         @Test
-        public void getDate(){
-            int year = 2019;
-            int month = 3;
-            int day = 9;
+        public void getDateTest(){
+            NotificationReceiver notificationReceiver = new NotificationReceiver();
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+            int month = Calendar.getInstance().get(Calendar.MONTH);
+            int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+            notificationReceiver.getDate();
             month+=1;
             String monthString = String.valueOf(month);
             if(monthString.length() == 1)
                 monthString = "0" + monthString;
             String dayString = String.valueOf(day);
+            if(dayString.length() == 1)
                 dayString = "0"+dayString;
-
-           assertEquals( "20190409",String.valueOf(year)+monthString+dayString);
+           assertEquals(  String.valueOf(year)+monthString+dayString,notificationReceiver.getDate());
         }
 
-    }
+        @Test
+    public void textNotificationTest(){
+            NotificationReceiver notificationReceiver = new NotificationReceiver();
+            assertEquals("3 articles correspondent à votre recherche", notificationReceiver.textNotification(3));
+
+        }
+}

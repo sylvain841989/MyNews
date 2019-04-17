@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 
+
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.ui.adapters.ViewPagerAdapter;
 import conraud.sylvain.mynews.utils.CallBack;
@@ -27,17 +28,16 @@ import conraud.sylvain.mynews.utils.Save;
 
 public class MainActivity extends AppCompatActivity {
 
-    CallBack callBack;
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    public ProgressBar progressBar;
+    private CallBack callBack;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configureAll();
-
     }
 
     @Override
@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         configureNotification();
         configureDrawerLayout();
         configureNavigationView();
-
-
     }
 
     /*Toolbar*/
@@ -87,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     /*Configure ViewPager and Tabs*/
@@ -108,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
+
     /*configure Navigation View*/
     private void configureNavigationView(){
         final NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -137,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
-
                 return true;
             }
         });
@@ -153,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureNotification(){
         //Notification.getInstance().context = this;
-        Notification.getInstance().changeStateNotification(this);
+        if(!getSharedPreferences("save", MODE_PRIVATE).getBoolean("firstStart", false)){
+            Notification.getInstance().configureNotification(this);
+        }
     }
 
     /*Call*/
@@ -162,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         CallService.callMostPopular(callBack, CallBack.KEY_MOSTPOPULAR, this);
         CallService.callTopStories(callBack, "science", CallBack.KEY_SCIENCE, this);
     }
+
     private void callMenuDrawer (String filter){
         CallService.callTopStories(callBack,filter,CallBack.KEY_MENU_DRAWER,this);
     }

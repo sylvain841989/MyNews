@@ -21,10 +21,10 @@ import conraud.sylvain.mynews.utils.ItemClickSupport;
 
 public class MainFragment extends Fragment {
 
-    int position;
-    public List<Article> articleList = new ArrayList<>();
+    private int position;
+    public final List<Article> articleList = new ArrayList<>();
     public RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(articleList,position);
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -40,8 +40,6 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
-
-
     /*create view and configure Recycler*/
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -56,22 +54,21 @@ public class MainFragment extends Fragment {
         recyclerViewAdapter = new RecyclerViewAdapter(articleList, position);
         recyclerView.setAdapter(recyclerViewAdapter);
         configureOnClickRecyclerView();
-
         return result;
     }
+
     //configure click
-    void configureOnClickRecyclerView(){
+    private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         openArticle(articleList.get(position));
-
                     }
                 });
     }
 
-    void openArticle(Article article){
+    private void openArticle(Article article){
         Intent intent = new Intent(getContext(), ArticleWebViewActivity.class);
         intent.putExtra("url", article.getUrl());
         startActivity(intent);

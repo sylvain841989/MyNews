@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface NewYorkTimesService {
+ interface NewYorkTimesService {
 
     @GET("/svc/topstories/v2/{home}.json?api-key=QvXYMDrGQ0TCPo3okaqyuUSp54eQBniA")
     Call<Root> callTopStories (@Path("home") String category);

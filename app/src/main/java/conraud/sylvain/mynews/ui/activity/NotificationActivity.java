@@ -13,23 +13,21 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.utils.Save;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    EditText editTextSearch;
-    Switch aSwitch;
-    CheckBox checkBoxArts, checkBoxBusiness, checkBoxEntrepreneurs, checkBoxPolitic, checkBoxSport, checkBoxTravel;
-    String filter;
-    int nbCheckboxChecked;
+    private EditText editTextSearch;
+    private Switch aSwitch;
+    private CheckBox checkBoxArts, checkBoxBusiness, checkBoxEntrepreneurs, checkBoxPolitic, checkBoxSport, checkBoxTravel;
+    private String filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-
         configureToolbar();
         configureLayout();
         configureEditTextSearch();
@@ -75,9 +73,8 @@ public class NotificationActivity extends AppCompatActivity {
         buttonSearch.setVisibility(View.GONE);
         textViewBeginDate.setVisibility(View.GONE);
         textViewEndDate.setVisibility(View.GONE);
-
-
     }
+
     /*Save input search*/
     private void configureEditTextSearch(){
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -93,7 +90,6 @@ public class NotificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
         editTextSearch.setText(Save.getInstance().loadSearchNotification());
     }
 
@@ -106,7 +102,6 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
         aSwitch.setChecked(Save.getInstance().loadActivationNotification());
-
     }
 
     /*Configure and save checkbox*/
@@ -133,12 +128,10 @@ public class NotificationActivity extends AppCompatActivity {
         checkBoxPolitic.setOnCheckedChangeListener(onCheckedChangeListener);
         checkBoxSport.setOnCheckedChangeListener(onCheckedChangeListener);
         checkBoxTravel.setOnCheckedChangeListener(onCheckedChangeListener);
-
-
     }
 
     private void blockCheckboxChecked(){
-       nbCheckboxChecked = 0;
+       int nbCheckboxChecked = 0;
        CheckBox[] arrayCheckbox = new CheckBox[6];
         arrayCheckbox[0]= checkBoxBusiness;
         arrayCheckbox[1]= checkBoxArts;
@@ -151,7 +144,6 @@ public class NotificationActivity extends AppCompatActivity {
             if(checkBox.isChecked())
                 nbCheckboxChecked+=1;
         }
-
         if(nbCheckboxChecked < 2){
             for(CheckBox checkBox : arrayCheckbox){
                 if(checkBox.isChecked())

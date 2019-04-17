@@ -11,7 +11,7 @@ import conraud.sylvain.mynews.ui.fragments.MainFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    public MainFragment[] arrayFragment = new MainFragment[3];
+    public final MainFragment[] arrayFragment = new MainFragment[3];
 
     public ViewPagerAdapter(FragmentManager fm ) {
         super(fm);

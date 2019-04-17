@@ -4,34 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <EditText
+        android:autofillHints="@android:string/autofill"
         android:id="@+id/edit_text_search"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:backgroundTint="@color/colorPrimary"
         android:layout_margin="15dp"
         android:hint="Search query term"
-        tools:ignore="UnusedAttribute" />
+        tools:ignore="UnusedAttribute"
+        android:inputType="text"/>
+
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="50">
+
             <TextView
                 android:id="@+id/text_view_begin_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Begin date"
                 android:textAlignment="center"/>
+
             <EditText
+                android:autofillHints="@android:string/autofill"
                 android:id="@+id/edit_text_begin-date"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -41,7 +47,9 @@
                 android:layout_marginEnd="20dp"
                 android:focusable="false"
                 android:textAlignment="center"
-                 />
+                android:inputType="none"
+                tools:ignore="LabelFor,UnusedAttribute" />
+
             <CheckBox
                 android:id="@+id/checkbox_arts"
                 android:layout_width="130dp"
@@ -51,8 +59,8 @@
                 android:layout_margin="5dp"
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
-                tools:ignore="UnusedAttribute"
-                />
+                tools:ignore="UnusedAttribute" />
+
             <CheckBox
                 android:id="@+id/checkbox_business"
                 android:layout_width="130dp"
@@ -62,8 +70,8 @@
                 android:layout_margin="5dp"
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
-                tools:ignore="UnusedAttribute"
-                />
+                tools:ignore="UnusedAttribute" />
+
             <CheckBox
                 android:id="@+id/checkbox_entrepreneurs"
                 android:layout_width="130dp"
@@ -73,8 +81,8 @@
                 android:layout_margin="5dp"
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
-                tools:ignore="UnusedAttribute"
-                />
+                tools:ignore="UnusedAttribute" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -82,13 +90,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="50">
+
             <TextView
                 android:id="@+id/text_view_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="End date"
                 android:textAlignment="center"/>
+
             <EditText
+                android:autofillHints="@android:string/autofill"
                 android:id="@+id/edit_text_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -97,7 +108,9 @@
                 android:layout_marginStart="20dp"
                 android:focusable="false"
                 android:textAlignment="center"
-                />
+                android:inputType="none"
+                tools:ignore="LabelFor,TextFields,UnusedAttribute" />
+
             <CheckBox
                 android:id="@+id/checkbox_politic"
                 android:layout_width="130dp"
@@ -108,6 +121,7 @@
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
                 tools:ignore="UnusedAttribute"/>
+
             <CheckBox
                 android:id="@+id/checkbox_sport"
                 android:layout_width="130dp"
@@ -118,6 +132,7 @@
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
                 tools:ignore="UnusedAttribute"/>
+
             <CheckBox
                 android:id="@+id/checkbox_travel"
                 android:layout_width="130dp"
@@ -127,17 +142,19 @@
                 android:layout_margin="5dp"
                 android:checked="true"
                 android:buttonTint="@color/colorPrimary"
-                tools:ignore="UnusedAttribute"
-                />
+                tools:ignore="UnusedAttribute" />
+
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="300dp"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         android:layout_margin="20dp"
         android:layout_gravity="center"/>
+
     <Button
         android:id="@+id/button_search"
         android:layout_width="300dp"
@@ -146,6 +163,7 @@
         android:background="@color/colorPrimary"
         android:text="Search"
         android:textColor="@android:color/white"/>
+
     <Switch
         android:id="@+id/switch_notification"
         android:layout_width="match_parent"
@@ -153,8 +171,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginStart="40dp"
         android:textColor="@android:color/black"
-        android:text="Enable notifications (once per day)"
-        />
+        android:text="Enable notifications (once per day)" />
+
     </LinearLayout>
 
 

@@ -17,16 +17,14 @@ import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.data.Article;
 import conraud.sylvain.mynews.data.Root;
 import conraud.sylvain.mynews.ui.adapters.RecyclerViewAdapter;
-import conraud.sylvain.mynews.utils.CallBack;
 import conraud.sylvain.mynews.utils.ItemClickSupport;
-import conraud.sylvain.mynews.utils.Save;
 
 public class ResultsSearchActivity extends AppCompatActivity {
 
-    Root root;
-    RecyclerView recyclerView;
-    RecyclerViewAdapter recyclerViewAdapter;
-    List<Article> articleList;
+    private Root root;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private List<Article> articleList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +38,12 @@ public class ResultsSearchActivity extends AppCompatActivity {
         System.out.println(articleList);
         if(articleList == null || articleList.size() == 0)
             displayDialogNoArticle();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         recyclerViewAdapter.notifyDataSetChanged();
-
     }
 
     /*configure UI*/
@@ -66,6 +62,7 @@ public class ResultsSearchActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
     //configure Recycler
     private void configureRecycler(){
         int key;
@@ -81,8 +78,9 @@ public class ResultsSearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(recyclerViewAdapter);
     }
+
     //configure click
-    void configureOnClickRecyclerView(){
+    private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -91,7 +89,8 @@ public class ResultsSearchActivity extends AppCompatActivity {
                     }
                 });
     }
-    void openArticle(Article article){
+
+    private void openArticle(Article article){
         Intent intent = new Intent(this, ArticleWebViewActivity.class);
         if(article.getWeburl() != null){
             intent.putExtra("url", article.getWeburl());
@@ -101,6 +100,8 @@ public class ResultsSearchActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
+
+    /*Open dialog if no article available*/
     private void displayDialogNoArticle(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Aucun article ne correspond à votre recherche");
@@ -111,6 +112,5 @@ public class ResultsSearchActivity extends AppCompatActivity {
             }
         }).create()
                 .show();
-
     }
 }

@@ -30,11 +30,12 @@ import conraud.sylvain.mynews.utils.CallService;
 
 public class SearchActivity extends AppCompatActivity implements CallService.Callback{
 
-    EditText editTextSearch, editTextBeginDate, editTextEndDate;
-    CheckBox checkBoxArts, checkBoxBusiness, checkBoxEntrepreneurs, checkBoxPolitic, checkBoxSport, checkBoxTravel;
-    Button buttonSearch;
-    StringBuilder stringBuilderFilter = new StringBuilder();
-    String beginDate, endDate;
+    private EditText editTextSearch, editTextBeginDate, editTextEndDate;
+    private CheckBox checkBoxArts, checkBoxBusiness, checkBoxEntrepreneurs, checkBoxPolitic, checkBoxSport, checkBoxTravel;
+    //public for unit test
+    public String beginDate;
+    private String  endDate;
+    public String dateTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
        configureViews();
        configureToolbar();
        configureDate();
-
     }
 
     /*configure UI*/
@@ -57,13 +57,14 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
-
     }
+
     //Hide Ui notifications
     private void configureLayout(){
         Switch switchNotification = findViewById(R.id.switch_notification);
         switchNotification.setVisibility(View.GONE);
     }
+
     //Link views
     private void configureViews(){
         editTextSearch = findViewById(R.id.edit_text_search);
@@ -75,7 +76,7 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         checkBoxPolitic = findViewById(R.id.checkbox_politic);
         checkBoxSport = findViewById(R.id.checkbox_sport);
         checkBoxTravel = findViewById(R.id.checkbox_travel);
-        buttonSearch = findViewById(R.id.button_search);
+        Button buttonSearch = findViewById(R.id.button_search);
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,8 +84,9 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
             }
         });
     }
+
     /*configure date and click*/
-    void configureDate(){
+    private void configureDate(){
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get (Calendar.MONTH);
@@ -127,7 +129,7 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
 
     //display and save date
     @SuppressLint("SetTextI18n")
-    void setDate(int year, int month , int day, int id){
+    public void setDate(int year, int month , int day, int id){ //testing
         month += 1 ;
         String monthString = String.valueOf(month);
         if(monthString.length() == 1)
@@ -144,12 +146,14 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
             case 1:editTextEndDate.setText(dayString+"/" + monthString+"/" + year);
                 endDate = String.valueOf(year) + monthString + dayString;
                 break;
+            case 2 : beginDate = String.valueOf(year) + monthString + dayString;
+            dateTest =  dayString+"/" + monthString+"/" + year;
         }
     }
 
     /*Check checkbox and return String*/
-    String getFilters(){
-        stringBuilderFilter = new StringBuilder();
+    private String getFilters(){
+        StringBuilder stringBuilderFilter = new StringBuilder();
 
         if(checkBoxArts.isChecked())
             stringBuilderFilter.append("arts+");
@@ -168,7 +172,7 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
     }
 
     /*Start Call Search*/
-    void callSearch(){
+    private void callSearch(){
         if(checkDateIfIsCorrect()){
             String search = editTextSearch.getText().toString();
             String filter = getFilters();
@@ -181,8 +185,8 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         else{
             displayDialogErrorDate();
         }
-
     }
+
     /*Dialog error*/
     private void displayDialogErrorFilter() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -226,16 +230,12 @@ public class SearchActivity extends AppCompatActivity implements CallService.Cal
         if(endDate ==null || beginDate == null)
             return false;
         return Integer.valueOf(beginDate) <= Integer.valueOf(endDate);
-
     }
 
     /*Open Results Activity*/
-    void startResultsActivity(Root root){
+    private void startResultsActivity(Root root){
         Intent intent = new Intent(this, ResultsSearchActivity.class);
         intent.putExtra("root", root);
         startActivity(intent);
     }
-
-
-
 }

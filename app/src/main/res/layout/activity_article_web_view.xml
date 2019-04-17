@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
+
     <include
         layout="@layout/toolbar"
         android:id="@+id/toolbar" />
+
     <WebView
         android:layout_below="@+id/toolbar"
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </WebView>
 
     <ProgressBar
@@ -23,4 +23,5 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:theme="@style/MyCheckBox"/>
+
 </RelativeLayout>

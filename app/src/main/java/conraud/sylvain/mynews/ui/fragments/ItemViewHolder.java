@@ -18,11 +18,11 @@ import conraud.sylvain.mynews.utils.Save;
 
 public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView imageView;
-    private TextView textViewDate, textViewTitle, textViewCategory;
-    private RequestManager glide;
-    private LinearLayout mainLinearLayout;
-    private Context context;
+    private final ImageView imageView;
+    private final TextView textViewDate, textViewTitle, textViewCategory;
+    private final RequestManager glide;
+    private final LinearLayout mainLinearLayout;
+    private final Context context;
 
     /*Assign Views*/
     public ItemViewHolder(@NonNull View itemView) {
@@ -50,7 +50,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         }else{
             mainLinearLayout.setBackgroundColor(Color.TRANSPARENT);
         }
-
         switch (position){
             case 0 : if(multimediaContentImage(article))
                 glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
@@ -77,6 +76,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     private Boolean multimediaContentImage(Article article){
         return article.getMultimedia().size() > 0;
     }
+
     //check media
     private Boolean mediaContentImage(Article article){
         return article.getMedia().size() > 0 && article.getMedia().get(0).getMedia().size()>0;

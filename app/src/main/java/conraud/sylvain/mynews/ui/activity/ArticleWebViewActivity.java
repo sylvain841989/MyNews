@@ -13,14 +13,16 @@ import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.utils.Save;
 
 public class ArticleWebViewActivity extends AppCompatActivity {
-    private String url;
-    private WebView webView;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_web_view);
+
+        String url;
+        WebView webView;
+
         url = getIntent().getStringExtra("url");
         Save.getInstance().saveUrl(url, this);
         webView = findViewById(R.id.web_view);

@@ -6,45 +6,35 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.widget.Toast;
 
-import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.List;
 
 import conraud.sylvain.mynews.R;
 import conraud.sylvain.mynews.data.Article;
 import conraud.sylvain.mynews.data.Root;
-import conraud.sylvain.mynews.ui.activity.MainActivity;
 import conraud.sylvain.mynews.ui.activity.ResultsSearchActivity;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class NotificationReceiver extends BroadcastReceiver implements CallService.Callback{
-    Context context;
+    private Context context;
     @Override
     public void onReceive(Context context, Intent intent) {
     this.context = context;
        call();
-
     }
-    /*Create Notification*/
-    void createNotif(Root root){
 
+    /*Create Notification*/
+    private void createNotif(Root root){
         Intent repeatingIntent = new Intent(context, ResultsSearchActivity.class);
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         repeatingIntent.putExtra("root", root);
-
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(repeatingIntent);
-
         PendingIntent pendingIntent1 = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"notif" )
                 .setContentIntent(pendingIntent1)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -54,11 +44,10 @@ public class NotificationReceiver extends BroadcastReceiver implements CallServi
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(textNotification(checkNbArticle(root))));
-
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(0, builder.build());
-
     }
+
     /*Call search*/
     private void call(){
         SharedPreferences preferences = context.getSharedPreferences("save",MODE_PRIVATE);
@@ -66,7 +55,6 @@ public class NotificationReceiver extends BroadcastReceiver implements CallServi
         String filter = preferences.getString("filter", "arts+business+entrepreneurs+politic+sport+travel+");
         String date = getDate();
         CallService.callNotification(this,search,filter,date,date, CallBack.KEY_SEARCH,context);
-
     }
 
     /*Callback search*/
@@ -77,10 +65,10 @@ public class NotificationReceiver extends BroadcastReceiver implements CallServi
 
     @Override
     public void onFailure(Context context) {
-
     }
+
     /*today date*/
-    private String getDate(){
+    public String getDate(){    //testing
         int year = Calendar.getInstance().get(Calendar.YEAR);
         int month = Calendar.getInstance().get(Calendar.MONTH);
         int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -105,12 +93,11 @@ public class NotificationReceiver extends BroadcastReceiver implements CallServi
         return articleList.size();
     }
 
-    private String textNotification(int nbArticle){
+    public String textNotification(int nbArticle){  //testing
         if(nbArticle>0){
             return nbArticle + " articles correspondent à votre recherche";
         }else{
             return "Aucun article ne correspond à votre recherche, élargissez les critères";
         }
     }
-
 }
